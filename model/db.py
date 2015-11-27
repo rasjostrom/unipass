@@ -56,7 +56,7 @@ class Model(object):
         cur.execute("SELECT * FROM {} WHERE uuid=?".format(self.__name__), (uuid,)) 
         obj = cur.fetchone()
         try:
-            return self(**pickle.loads(obj['data'].encode('utf-8')))
+            return self(**pickle.loads(obj['data']))
         except TypeError:
             return None
         
