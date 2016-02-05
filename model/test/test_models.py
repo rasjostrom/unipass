@@ -2,7 +2,7 @@
 import unittest
 import os
 
-from model.models import User, Entry
+from model.models import User
 from model.models import initdb
 
 
@@ -17,29 +17,24 @@ class UserTest(unittest.TestCase):
         except OSError:
             pass
 
-    def test_user_create(self):
+    def test_valid__returnFalse(self):
+        self.user = User()
+        self.assertFalse(self.user.valid())
+
+    def test_valid_user_returnFalse(self):
         self.user = User()
         self.user.name = "John"
-        self.user.password = "password"
-        self.assertTrue(self.user.create())
+        self.assertFalse(self.user.valid())
 
-    def test_user_create_no_password(self):
+    def test_valid_userPass_returnTrue(self):
         self.user = User()
-        self.user.name = "John"
-        self.user.password = ""
-        self.assertTrue(self.user.create())
+        self.user.name = 'John'
+        self.user.password = 'password'
+        self.assertTrue(self.user.valid())
 
-    def test_user_create_no_username_and_no_password(self):
-        self.user = User()
-        self.user.name = ""
-        self.user.password = ""
-        self.assertTrue(self.user.create())
-
-    def test_get_user_by_name(self):
-        self.assertTrue("John" in [user.name for user in User.getall()])
-
-
-
+    def test_valid_userPassKWARGS_returnTrue(self):
+        self.user = User(_name='John', _password='password')
+        self.assertTrue(self.user.valid())
 
 
 
