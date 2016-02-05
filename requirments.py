@@ -1,2 +1,3 @@
 urwid
-blowfish
+simple-crypt
+click
