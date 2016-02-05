@@ -5,10 +5,10 @@ class Descriptor(object):
     """
     def __init__(self, label):
         self.label = label
-        
-    def __get__(self, instance):
+
+    def __get__(self, instance, cls):
         return instance.__dict__.get(self.label)
-    
+
     def __set__(self, instance, value):
         instance.__dict__[self.label] = value
 
@@ -20,7 +20,7 @@ class GetDescriptor(object):
     def __init__(self, label):
         self.label = label
         
-    def __get__(self, instance):
+    def __get__(self, instance, cls):
         return instance.__dict__.get(self.label)
 
 
@@ -31,7 +31,7 @@ class AdminDescriptor(object):
     def __init__(self, label):
         self.label = label
 
-    def __get__(self, instance):
+    def __get__(self, instance, cls):
         return instance.__dict__.get(self.label)
 
     def __set__(self, instance, value):
