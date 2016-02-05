@@ -2,10 +2,9 @@ from uuid import uuid1
 import inspect 
 import sys
 import sqlite3 as lite
-import hashlib
 
-from db import Model
-from descriptors import Descriptor, GetDescriptor
+from model.db import Model
+from model.descriptors import Descriptor, GetDescriptor, AdminDescriptor
 
 
 """
@@ -39,32 +38,30 @@ class User(Model):  // Inherits from Model
 
 
 class User(Model):
-    """ User object
+    """
+    User object
     """
     uuid = GetDescriptor('_uuid')
-    
-    def __init__(self, **kwargs):
-        super(Model, self).__init__()
-        self._uuid = (kwargs['_uuid'] if '_uuid' in kwargs else str(uuid1()))
-        self._name = (kwargs['_name'] if '_name' in kwargs else '')
-        self._password = (kwargs['_password'] if '_password' in kwargs else '')
-
-        
-class Entry(Model):
-    """Password object.
-    Name
-    Password
-    """
-
-    uuid = GetDescriptor('_uuid')    
-    name = Descriptor('_name')    
+    name = Descriptor('_name')
     password = Descriptor('_password')
+    admin = AdminDescriptor('_admin')
     
     def __init__(self, **kwargs):
         super(Model, self).__init__()
         self._uuid = (kwargs['_uuid'] if '_uuid' in kwargs else str(uuid1()))
         self._name = (kwargs['_name'] if '_name' in kwargs else '')
         self._password = (kwargs['_password'] if '_password' in kwargs else '')
+        self._note = (kwargs['_note'] if '_note' in kwargs else '')
+        self._admin = (kwargs['_admin'] if '_admin' in kwargs else False)
+
+    def valid(self):
+        if len(self._name) == 0:
+            return False
+        if len(self._password) == 0:
+            return False
+        if len(self._uuid) == 0:
+            return False
+        return True
 
 
 def initdb():
@@ -79,7 +76,7 @@ def initdb():
         con.close()
         return True
         
-    except:
+    except IOError:
         con = lite.connect('sqlite3.db')
         cur = con.cursor()
         clsmembers = inspect.getmembers(sys.modules[__name__], inspect.isclass)
@@ -90,15 +87,3 @@ def initdb():
         return False
 
 
-# Testing
-if __name__ == '__main__':
-    initdb()
-    # e = Entry()
-    # e.name = 'john'
-    # e.password = 'password'
-    # e.create()
-    print(Entry().getall()[0].name)
-    
-        
-
-    

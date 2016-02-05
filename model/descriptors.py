@@ -6,7 +6,7 @@ class Descriptor(object):
     def __init__(self, label):
         self.label = label
         
-    def __get__(self, instance, owner):
+    def __get__(self, instance):
         return instance.__dict__.get(self.label)
     
     def __set__(self, instance, value):
@@ -20,6 +20,22 @@ class GetDescriptor(object):
     def __init__(self, label):
         self.label = label
         
-    def __get__(self, instance, owner):
+    def __get__(self, instance):
         return instance.__dict__.get(self.label)
-        
+
+
+class AdminDescriptor(object):
+    """
+    Set admin True/False
+    """
+    def __init__(self, label):
+        self.label = label
+
+    def __get__(self, instance):
+        return instance.__dict__.get(self.label)
+
+    def __set__(self, instance, value):
+        if isinstance(value, bool):
+            instance.__dict__[self.label] = value
+        else:
+            raise ValueError('%s in not a boolean', value)
