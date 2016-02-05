@@ -23,9 +23,26 @@ class DBTest(unittest.TestCase):
         self.user.password = 'password'
         self.user.create()
         self.assertTrue(self.user.valid())
-        self.assertTrue(self.user._admin)
+        self.assertTrue(self.user in User.getall())
 
-    def test_AdminDescriptor_False_True(self):
+    def test_update_none(self):
         self.user = User()
-        self.admin = False
-        self.assertFalse(self.admin)
+        self.user.admin = True
+        self.user.name = 'John'
+        self.user.password = 'password'
+        self.user.create()
+        self.user = User.getbyuuid(self.user._uuid)
+        self.user.name = 'Kalle'
+        self.user.update()
+        self.assertTrue(self.user in User.getall())
+
+    def test_delete_none(self):
+        self.user = User()
+        self.user.admin = True
+        self.user.name = 'John'
+        self.user.password = 'password'
+        self.user.create()
+        self.user.delete()
+        self.assertFalse(self.user in User.getall())
+
+
