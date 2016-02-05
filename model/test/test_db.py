@@ -23,7 +23,7 @@ class DBTest(unittest.TestCase):
         self.user.password = 'password'
         self.user.create()
         self.assertTrue(self.user.valid())
-        self.assertTrue(self.admin)
+        self.assertTrue(self.user._admin)
 
     def test_AdminDescriptor_False_True(self):
         self.user = User()

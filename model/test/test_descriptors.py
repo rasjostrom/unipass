@@ -19,5 +19,5 @@ class DescriptorTest(unittest.TestCase):
         self.user = User()
         with self.assertRaises(ValueError):
             self.user.admin = 'notAbool'
-        self.assertFalse(self.user.admin)
+        self.assertFalse(self.user._admin)
 
