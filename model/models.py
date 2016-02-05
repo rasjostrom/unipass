@@ -42,13 +42,16 @@ class User(Model):
     User object
     """
     uuid = GetDescriptor('_uuid')
+    service = Descriptor('_service')
     name = Descriptor('_name')
     password = Descriptor('_password')
+    note = Descriptor('_note')
     admin = AdminDescriptor('_admin')
     
     def __init__(self, **kwargs):
         super(Model, self).__init__()
         self._uuid = (kwargs['_uuid'] if '_uuid' in kwargs else str(uuid1()))
+        self._service = (kwargs['_service'] if '_service' in kwargs else '')
         self._name = (kwargs['_name'] if '_name' in kwargs else '')
         self._password = (kwargs['_password'] if '_password' in kwargs else '')
         self._note = (kwargs['_note'] if '_note' in kwargs else '')
