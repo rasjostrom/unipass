@@ -1,14 +1,19 @@
-from blowfish import Cipher as cipher
+
+import pickle
+
+from simplecrypt import encrypt, decrypt
 
 
-class Crypto(object):
+def encrypt_and_pickle_dumps(data, key):
+    cipher = encrypt(data, key)
+    cipher_dump = pickle.dumps(cipher)
+    return cipher_dump
 
-    @staticmethod
-    def encrypt(self, data, key):
-        return str(b"".join(cipher.encrypt_cbc(data, key)))
 
-    @staticmethod
-    def decrypt(self, data, key):
-        return str(b"".join(cipher.decrypt_cbc(data, key)))
+def decrypt_and_pickle_loads(data, key):
+    cipher_dump = pickle.loads(data)
+    plaintext = decrypt(cipher_dump, key)
+    return plaintext
+
 
 
