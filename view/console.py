@@ -4,6 +4,7 @@ import click
 from model.models import initdb
 from controller import controller
 from getpass import getpass
+from view import unipass_urwid
 
 
 @click.command()
@@ -16,7 +17,12 @@ def start(urwid, add, get, list):
     if initdb() is not True:
         create_user()
 
-    if urwid: pass  # Start urwid view
+    if urwid:
+        username = raw_input('User:')
+        password = getpass('Pass: ')
+        if controller.login(username, password):
+            unipass_urwid.start()
+    
 
     if get is not None:
         username = raw_input('User:')
@@ -47,7 +53,7 @@ def start(urwid, add, get, list):
         for service in controller.list_all_services():
             print(service[0]+' | '+service[1])
 
-
+    
 def create_user():
     """
     Create a user
