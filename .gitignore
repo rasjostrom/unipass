@@ -1,5 +1,8 @@
 sqlite3.db
 
+.idea/
+.projectile
+bin/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
