@@ -1,7 +1,9 @@
 ## UniPass
 
 is a password manager for terminal environments.
+
 Password entries are stored in a sqlite3 database.
+
 AS FOR NOW THIS APPLICATION IS NOT SAFE TO USE!
 
 
@@ -14,6 +16,4 @@ AS FOR NOW THIS APPLICATION IS NOT SAFE TO USE!
 ## Usage
 
 python run.py --help  # Show command arguments
-python run.py --list  # List all entries
-python run.py --get {entry name}  # Get a specific entry
-python run.py --add  # Add entry
+
