@@ -1,5 +1,9 @@
 import sqlite3 as lite
+from settings import settings
 import pickle 
+
+
+DB = settings.DATABASE_LOCATION
 
 
 class Model(object):
@@ -14,7 +18,7 @@ class Model(object):
         """
         Save instance of model to db
         """
-        con = lite.connect('sqlite3.db')
+        con = lite.connect(DB)
         with con:
             cur = con.cursor()
             cur.execute("INSERT INTO {} (uuid, data) VALUES(?, ?)".format(self.__class__.__name__), (self._uuid, pickle.dumps(self.__dict__)))
@@ -24,7 +28,7 @@ class Model(object):
         """
         Update instance of model to db
         """
-        con = lite.connect('sqlite3.db')
+        con = lite.connect(DB)
         with con:
             cur = con.cursor()
             cur.execute("UPDATE {} SET data=? WHERE uuid=?".format(self.__class__.__name__), (pickle.dumps(self.__dict__), self._uuid))
@@ -35,7 +39,7 @@ class Model(object):
         """
         Delete instance of model to db
         """
-        con = lite.connect('sqlite3.db')
+        con = lite.connect(DB)
         with con:
             cur = con.cursor()
             cur.execute("DELETE FROM {} WHERE uuid=?".format(self.__class__.__name__), (self._uuid,))
@@ -46,7 +50,7 @@ class Model(object):
         """
         returns one object
         """
-        con = lite.connect('sqlite3.db')
+        con = lite.connect(DB)
         con.row_factory = lite.Row
         cur = con.cursor()
         cur.execute("SELECT * FROM {} WHERE uuid=?".format(cls.__name__), (uuid,))
@@ -61,7 +65,7 @@ class Model(object):
         """
         returns a list
         """
-        con = lite.connect('sqlite3.db')
+        con = lite.connect(DB)
         con.row_factory = lite.Row
         cur = con.cursor()
         cur.execute("SELECT * FROM {}".format(cls.__name__))

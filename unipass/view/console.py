@@ -8,7 +8,7 @@ from view import unipass_urwid
 
 
 @click.command()
-@click.option('--urwid', is_flag=True, help='Urwid terminal GUI {yes | no}, default=no')
+@click.option('--urwid', is_flag=True, help='Urwid terminal GUI')
 @click.option('--add', is_flag=True, help='Add service interactivly')
 @click.option('--get', help='Get service interactivly')
 @click.option('--list', is_flag=True, help='List all services')
@@ -18,10 +18,11 @@ def start(urwid, add, get, list):
         create_user()
 
     if urwid:
-        username = raw_input('User:')
-        password = getpass('Pass: ')
-        if controller.login(username, password):
-            unipass_urwid.start()
+        unipass_urwid.start()        
+        # username = raw_input('User:')
+        # password = getpass('Pass: ')
+        # if controller.login(username, password):
+        #     unipass_urwid.start()
     
 
     if get is not None:

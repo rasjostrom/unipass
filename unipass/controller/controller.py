@@ -13,6 +13,8 @@ def create_user(username, password):
     user = User()
     user.name = username
     user.password = password
+    user.service = 'UniPass'
+    user.note = 'Entry for UniPass'
     user.admin = True
     if user.valid():
         user.create()
@@ -28,7 +30,7 @@ def find_by_service(service):
 
 
 def list_all_services():
-    return [(user.service, user.name) for user in User.getall()]
+    return [(user.service, user.name, user.uuid) for user in User.getall()]
 
 
 def add_service(service, name, password, note):

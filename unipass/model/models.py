@@ -5,7 +5,7 @@ import sqlite3 as lite
 
 from model.db import Model
 from model.descriptors import Descriptor, GetDescriptor, AdminDescriptor
-
+from settings import settings
 
 """
 models.py
@@ -35,6 +35,8 @@ class User(Model):  // Inherits from Model
         self._password = (kwargs['_password'] if '_password' in kwargs else '')  // <- Optional
 
 """
+
+DB = settings.DATABASE_LOCATION
 
 
 class User(Model):
@@ -74,13 +76,13 @@ def initdb():
     There is a little overhead here, Model is also created in the database.
     """
     try:
-        open('sqlite3.db')
-        con = lite.connect('sqlite3.db')
+        open(DB)
+        con = lite.connect(DB)
         con.close()
         return True
         
     except IOError:
-        con = lite.connect('sqlite3.db')
+        con = lite.connect(DB)
         cur = con.cursor()
         clsmembers = inspect.getmembers(sys.modules[__name__], inspect.isclass)
         for cls in clsmembers:
