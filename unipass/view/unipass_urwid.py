@@ -23,7 +23,7 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
         self.open_box(
             self.menu('Services',
                       [
-                          self.button(user[0], None) for user in controller.list_all_services()
+                          self.button(user[0], self.service_detail, user[2]) for user in controller.list_all_services()
                       ]+
                       [
                           urwid.Text('\n\n')
@@ -32,11 +32,22 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                           self.button('Back', self.back)
                       ]
         ))
+
+    def service_detail(self, service, data):
+        entry = controller.get_service(data)
+        self.open_box(
+            self.menu(entry.service,
+                [urwid.Text('Username: '), urwid.Text(entry.name), urwid.Text('\n'),
+                 urwid.Text('Password: '), urwid.Text(entry.password), urwid.Text('\n'),
+                 urwid.Text('Note: '), urwid.Text(entry.note), urwid.Text('\n\n'),
+             ]+[self.button('Back', self.back)]
+            )
+        )
         
 
-    def button(self, caption, callback):
+    def button(self, caption, callback, data=None):
         button = urwid.Button(caption)
-        urwid.connect_signal(button, 'click', callback)
+        urwid.connect_signal(button, 'click', callback, data)
         return urwid.AttrMap(button, None, focus_map='reversed')
 
     def open_box(self, box):
