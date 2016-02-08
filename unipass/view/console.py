@@ -33,8 +33,8 @@ def start(urwid, add, get, list):
             if result is not None:
                 print('Service: {}'.format(result.service))
                 print('User: {}'.format(result.name))
+                print('Password: {}'.format(result.password))
                 print('Note: {}'.format(result.note))
-                print('Password: {}'.format(result.password))                
             else:
                 print('could not find service')
         else:

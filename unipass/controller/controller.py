@@ -46,12 +46,12 @@ def add_service(service, name, password, note):
         return False
 
 
-def update_service(uuid, **kwargs):
+def update_service(uuid, service, name, password, note):
     serv = User.getbyuuid(uuid)
-    serv.service = kwargs['service']
-    serv.name = kwargs['name']
-    serv.password = kwargs['password']
-    serv.note = kwargs['note']
+    serv.service = service
+    serv.name = name
+    serv.password = password
+    serv.note = note
     if serv.valid():
         serv.update()
         return True
