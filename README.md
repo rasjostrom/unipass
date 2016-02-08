@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jherrlin/UniPass.svg?branch=master)](https://travis-ci.org/jherrlin/UniPass)
+
 ## UniPass
 
 is a password manager for terminal environments.
