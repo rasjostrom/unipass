@@ -14,8 +14,7 @@ class ControllerTest(unittest.TestCase):
 
     def tearDown(self):
         try:
-            print(os.path.join(BASE_DIR, 'db.sqlite3'))
-            #os.remove(os.path.join(BASE_DIR, 'db.sqlite3'))
+            os.remove('sqlite3.db')
         except OSError:
             pass
 
@@ -24,6 +23,12 @@ class ControllerTest(unittest.TestCase):
 
     def test_addService_True(self):
         self.assertTrue(controller.add_service('facebook', 'jherrin@gmail.com', 'password', 'facebook acc'))
+
+    def test_login_True(self):
+        self.assertTrue(controller.create_user('admin', 'password'))
+        self.assertTrue(controller.login('admin', 'password'))
+
+
 
 
 

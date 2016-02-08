@@ -1,16 +1,16 @@
 
-from unipass.model.models import User
+from unipass.model.models import Service
 
 
 def login(username, password):
-    for user in User.getall():
+    for user in Service.getall():
         if (user.name == username and user.password == password) and user.admin:
             return True
     return False
 
 
 def create_user(username, password):
-    user = User()
+    user = Service()
     user.name = username
     user.password = password
     user.service = 'UniPass'
@@ -22,19 +22,20 @@ def create_user(username, password):
     else:
         return False
 
+
 def find_by_service(service):
-    for user in User.getall():
+    for user in Service.getall():
         if user.service == service:
             return user
     return None
 
 
 def list_all_services():
-    return [(user.service, user.name, user.uuid) for user in User.getall()]
+    return [(user.service, user.name, user.uuid) for user in Service.getall()]
 
 
 def add_service(service, name, password, note):
-    serv = User()
+    serv = Service()
     serv.service = service
     serv.name = name
     serv.password = password
@@ -47,7 +48,7 @@ def add_service(service, name, password, note):
 
 
 def update_service(uuid, service, name, password, note):
-    serv = User.getbyuuid(uuid)
+    serv = Service.getbyuuid(uuid)
     serv.service = service
     serv.name = name
     serv.password = password
@@ -59,8 +60,8 @@ def update_service(uuid, service, name, password, note):
         return False
 
 
-def get_service(uuid):
-    return User.getbyuuid(uuid)
+def get_service_by_uuid(uuid):
+    return Service.getbyuuid(uuid)
 
 
 

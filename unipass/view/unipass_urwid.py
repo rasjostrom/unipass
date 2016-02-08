@@ -22,7 +22,7 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
             ])
         )
 
-    def service_list(self, services):
+    def service_list(self, btn):
 
         self.open_box(
             self.menu('Services',
@@ -37,12 +37,12 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                       ]
         ))
 
-    def service_detail(self, service, data):
+    def service_detail(self, btn, data):
 
         def password_to_clipboard(btn):
             pass
         
-        entry = controller.get_service(data)
+        entry = controller.get_service_by_uuid(data)
         self.open_box(
             self.menu(entry.service,
                 [urwid.Text('Username: '), urwid.Text(entry.name), urwid.Text('\n'),
@@ -76,7 +76,7 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
             self.menu('Edit: {}'.format(data.service), [status, service, name, password, note]+[urwid.Text('\n'), self.button('Save', save), urwid.Text('\n'), self.button('Back', self.back)])
         )
 
-    def generate_password(self, something):
+    def generate_password(self, btn):
         self.open_box(
             self.menu(
                 'Genereate Password',
@@ -107,7 +107,7 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
         body.extend(choices)
         return urwid.ListBox(urwid.SimpleFocusListWalker(body))
 
-    def back(self, something):
+    def back(self, btn):
         self.original_widget = self.original_widget[0]
         self.box_level -= 1
 
@@ -118,9 +118,8 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
             self.exit_program(None)
         else:
             return super(UniPassUrwid, self).keypress(size, key)
-    
 
-    def exit_program(self, button):
+    def exit_program(self, btn):
         raise urwid.ExitMainLoop()
         
 

@@ -41,7 +41,7 @@ LOCATION = settings.DATABASE_LOCATION
 DB = settings.DB
 
 
-class User(Model):
+class Service(Model):
     """
     User object
     """
