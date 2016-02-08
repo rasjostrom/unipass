@@ -3,7 +3,7 @@ from unipass.settings import settings
 import pickle 
 
 
-DB = settings.DATABASE_LOCATION
+DB = settings.DB
 
 
 class Model(object):

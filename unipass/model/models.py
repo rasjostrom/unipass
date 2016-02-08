@@ -1,6 +1,7 @@
 from uuid import uuid1 
 import inspect 
 import sys
+import os
 import sqlite3 as lite
 
 from unipass.model.db import Model
@@ -36,7 +37,8 @@ class User(Model):  // Inherits from Model
 
 """
 
-DB = settings.DATABASE_LOCATION
+LOCATION = settings.DATABASE_LOCATION
+DB = settings.DB
 
 
 class User(Model):
@@ -76,6 +78,12 @@ def initdb():
     There is a little overhead here, Model is also created in the database.
     """
     try:
+        if not os.path.exists(LOCATION):
+            try:
+                os.makedirs(os.path.dirname(LOCATION))
+            except OSError as e: # Guard against race condition
+                print(e)
+
         open(DB)
         con = lite.connect(DB)
         con.close()
