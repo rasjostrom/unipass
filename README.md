@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/jherrlin/UniPass.svg?branch=master)](https://travis-ci.org/jherrlin/UniPass)
+[![Build Status](https://travis-ci.org/jherrlin/unipass.svg?branch=master)](https://travis-ci.org/jherrlin/unipass)
 
 ## UniPass
 
