@@ -1,7 +1,7 @@
 
 import json
 
-from unipass.model.models import Service
+from unipass.model.models import Service, initdb
 
 
 def login(username, password):
@@ -67,16 +67,26 @@ def get_service_by_uuid(uuid):
 
 
 def export_data(path='unipass_export.json'):
-    with open(path, 'w') as outfile:
-        json.dump([s.__dict__ for s in Service.getall()], outfile, indent=4)
+    try:
+        with open(path, 'w') as outfile:
+            json.dump([s.__dict__ for s in Service.getall()], outfile, indent=4)
+        return True
+    except:
+        return False
 
 
 def import_data(path='unipass_export.json'):
+    initdb()  # If db not exists, create one
     with open(path, 'r') as fp:
-        for s in json.load(fp):
-            service = Service(**s)
-            if service.valid():
-                service.create()
+        try:
+            for s in json.load(fp):
+                service = Service(**s)
+                if service.valid():
+                    service.create()
+            return True
+        except ValueError:
+            return False
+
 
 
 

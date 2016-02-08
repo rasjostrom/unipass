@@ -12,8 +12,22 @@ from unipass.view import unipass_urwid
 @click.option('--urwid', is_flag=True, help='Urwid terminal GUI')
 @click.option('--add', is_flag=True, help='Add service interactivly')
 @click.option('--get', help='Get service interactivly')
+@click.option('--export-data', help='Export data, {path}')
+@click.option('--import-data', help='Import data, {path}')
 @click.option('--list', is_flag=True, help='List all services')
-def start(urwid, add, get, list):
+def start(urwid, add, get, list, export_data, import_data):
+
+    if import_data is not None:
+        if controller.import_data(import_data):
+            print('Import successful')
+        else:
+            print('Somethings wrong!')
+
+    if export_data is not None:
+        if controller.export_data(export_data):
+            print('Export successful!')
+        else:
+            print('Somethings wrong!')
 
     if initdb() is not True:
         create_user()

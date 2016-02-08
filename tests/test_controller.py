@@ -15,6 +15,7 @@ class ControllerTest(unittest.TestCase):
     def tearDown(self):
         try:
             os.remove('sqlite3.db')
+            os.remove('unipass_export.json')
         except OSError:
             pass
 
@@ -28,10 +29,18 @@ class ControllerTest(unittest.TestCase):
         self.assertTrue(controller.create_user('admin', 'password'))
         self.assertTrue(controller.login('admin', 'password'))
 
-    def test_exportData_None(self):
+    def test_exportData_True(self):
         self.assertTrue(controller.create_user('john', 'password'))
-        controller.export_data()
+        self.assertTrue(controller.export_data())
 
+    def test_exportData_False(self):
+        self.assertTrue(controller.export_data())
+
+    def test_importData_False(self):
+        self.assertFalse(controller.import_data(path='broken.json'))
+
+    def test_importData_True(self):
+        self.assertTrue(controller.import_data(path='correct.json'))
 
 
 

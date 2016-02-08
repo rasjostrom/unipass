@@ -81,7 +81,7 @@ def initdb():
         if not os.path.exists(LOCATION):
             try:
                 os.makedirs(os.path.dirname(LOCATION))
-            except OSError as e: # Guard against race condition
+            except OSError as e:  # Guard against race condition
                 print(e)
 
         open(DB)

@@ -1,0 +1,10 @@
+[
+    {
+        "_note": "Entry for UniPass", 
+        "_uuid": "2",
+        "_name": "john", 
+        "_admin": true, 
+        "_password": "password", 
+        "_service": "UniPass"
+    }
+]
