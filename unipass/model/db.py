@@ -1,5 +1,5 @@
 import sqlite3 as lite
-from settings import settings
+from unipass.settings import settings
 import pickle 
 
 

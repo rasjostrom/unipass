@@ -17,5 +17,6 @@ AS FOR NOW THIS APPLICATION IS NOT SAFE TO USE!
 
 ## Usage
 
-python run.py --help  # Show command arguments
+* python -m unipass --help
+  * Show command arguments
 

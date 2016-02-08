@@ -3,9 +3,9 @@ import inspect
 import sys
 import sqlite3 as lite
 
-from model.db import Model
-from model.descriptors import Descriptor, GetDescriptor, AdminDescriptor
-from settings import settings
+from unipass.model.db import Model
+from unipass.model.descriptors import Descriptor, GetDescriptor, AdminDescriptor
+from unipass.settings import settings
 
 """
 models.py

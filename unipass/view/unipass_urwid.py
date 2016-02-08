@@ -1,6 +1,6 @@
 
 import urwid
-from controller import controller
+from unipass.controller import controller
 
 
 class UniPassUrwid(urwid.WidgetPlaceholder):
@@ -23,6 +23,7 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
         )
 
     def service_list(self, services):
+
         self.open_box(
             self.menu('Services',
                       [
@@ -37,6 +38,10 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
         ))
 
     def service_detail(self, service, data):
+
+        def password_to_clipboard(btn):
+            pass
+        
         entry = controller.get_service(data)
         self.open_box(
             self.menu(entry.service,

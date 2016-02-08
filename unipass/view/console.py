@@ -1,10 +1,11 @@
 
-
 import click
-from model.models import initdb
-from controller import controller
+import pyperclip
 from getpass import getpass
-from view import unipass_urwid
+
+from unipass.model.models import initdb
+from unipass.controller import controller
+from unipass.view import unipass_urwid
 
 
 @click.command()

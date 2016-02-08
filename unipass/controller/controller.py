@@ -1,5 +1,5 @@
 
-from model.models import User
+from unipass.model.models import User
 
 
 def login(username, password):
