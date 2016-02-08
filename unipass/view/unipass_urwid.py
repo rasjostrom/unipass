@@ -1,6 +1,7 @@
 
 import urwid
 from unipass.controller import controller
+from unipass.settings import settings
 
 
 class UniPassUrwid(urwid.WidgetPlaceholder):
@@ -17,6 +18,8 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                 self.button('List entries', self.service_list),
                 self.button('Search entry', None),
                 self.button('Generate password', self.generate_password),
+                self.button('Export to file', self.export_to_file),
+                self.button('Import from file', self.import_from_file),
                 urwid.Text('\n'),
                 self.button('Quit', self.exit_program),
             ])
@@ -52,7 +55,7 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
             )
         )
 
-    def service_edit(self, service, data):
+    def service_edit(self, btn, data):
 
         service = urwid.Edit(caption='Service: ', edit_text=data.service)
         name = urwid.Edit(caption='Username: ', edit_text=data.name)
@@ -74,6 +77,32 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
         
         self.open_box(
             self.menu('Edit: {}'.format(data.service), [status, service, name, password, note]+[urwid.Text('\n'), self.button('Save', save), urwid.Text('\n'), self.button('Back', self.back)])
+        )
+
+    def export_to_file(self, btn):
+
+        path = urwid.Edit(caption='Export path: ', edit_text=settings.HOME_DIR+'/unipass_export.json')
+        status = urwid.Text('\n', align='center')
+
+        def save(btn):
+            controller.export_data(path.get_edit_text())
+            status.set_text('\nUpdated success!')
+
+        self.open_box(
+            self.menu('Export UniPass database', [status, path]+[urwid.Text('\n'), self.button('Export', save), urwid.Text('\n'), self.button('Back', self.back)])
+        )
+
+    def import_from_file(self, btn):
+
+        path = urwid.Edit(caption='File location: ', edit_text=settings.HOME_DIR+'/unipass_export.json')
+        status = urwid.Text('\n', align='center')
+
+        def save(btn):
+            controller.import_data(path.get_edit_text())
+            status.set_text('\nImport success!')
+
+        self.open_box(
+            self.menu('Import from file', [status, path]+[urwid.Text('\n'), self.button('Start import', save), urwid.Text('\n'), self.button('Back', self.back)])
         )
 
     def generate_password(self, btn):

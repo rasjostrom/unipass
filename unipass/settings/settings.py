@@ -1,7 +1,5 @@
 import os
 
-#DATABASE_LOCATION = '~/.unipass/sqlite3.db'
-
 DEGUB = True
 
 if not DEGUB:
@@ -10,6 +8,7 @@ if not DEGUB:
     DATABASE_LOCATION = HOME_DIR + '/.unipass/'
     DB = DATABASE_LOCATION+DATABASE_NAME
 else:
+    HOME_DIR = os.path.expanduser('~')
     DATABASE_LOCATION = '.'
     DB = 'sqlite3.db'
 

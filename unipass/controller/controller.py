@@ -1,4 +1,6 @@
 
+import json
+
 from unipass.model.models import Service
 
 
@@ -62,6 +64,19 @@ def update_service(uuid, service, name, password, note):
 
 def get_service_by_uuid(uuid):
     return Service.getbyuuid(uuid)
+
+
+def export_data(path='unipass_export.json'):
+    with open(path, 'w') as outfile:
+        json.dump([s.__dict__ for s in Service.getall()], outfile, indent=4)
+
+
+def import_data(path='unipass_export.json'):
+    with open(path, 'r') as fp:
+        for s in json.load(fp):
+            service = Service(**s)
+            if service.valid():
+                service.create()
 
 
 

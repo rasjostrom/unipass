@@ -28,6 +28,10 @@ class ControllerTest(unittest.TestCase):
         self.assertTrue(controller.create_user('admin', 'password'))
         self.assertTrue(controller.login('admin', 'password'))
 
+    def test_exportData_None(self):
+        self.assertTrue(controller.create_user('john', 'password'))
+        controller.export_data()
+
 
 
 
