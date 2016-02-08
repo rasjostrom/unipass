@@ -1,6 +1,6 @@
 import unittest
 
-from model.models import User
+from unipass.model.models import User
 
 
 class DescriptorTest(unittest.TestCase):

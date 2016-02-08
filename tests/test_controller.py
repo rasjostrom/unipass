@@ -1,8 +1,8 @@
 import unittest
 import os
 
-from controller import controller
-from model.models import initdb
+from unipass.controller import controller
+from unipass.model.models import initdb
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

@@ -2,7 +2,7 @@
 
 import unittest
 
-from security.security import encrypt_and_pickle_dumps, decrypt_and_pickle_loads
+from unipass.security.security import encrypt_and_pickle_dumps, decrypt_and_pickle_loads
 
 
 # class CryptoTest(unittest.TestCase):

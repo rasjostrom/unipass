@@ -1,8 +1,8 @@
 import unittest
 import os
 
-from model.models import User
-from model.models import initdb
+from unipass.model.models import User
+from unipass.model.models import initdb
 
 
 class DBTest(unittest.TestCase):
