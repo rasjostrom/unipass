@@ -1,5 +1,5 @@
 from distutils.core import setup
-from 
+
 setup(
     name = 'unipass',
     packages = ['unipass'],
