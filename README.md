@@ -54,3 +54,9 @@ Import/export
 python -m unipass --import-data <arg>
 python -m unipass --export-data <arg>
 ```
+
+
+## Todo
+- [ ] ! Encrypt data stored in db !
+- [ ] Get more test coverage
+
