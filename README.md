@@ -20,32 +20,42 @@ AS FOR NOW THIS APPLICATION DOES NOT ENCRYPT STORED PASSWORDS!
 Show available commands
 
 {% highlight bash %}
+
    python -m unipass --help
+   
 {% endhighlight %}
 
 Start urwid gui
 
 {% highlight bash %}
+
    python -m unipass --urwid
+   
 {% endhighlight %}
 
 Add service
 
 {% highlight bash %}
+
    python -m unipass --add
+   
 {% endhighlight %}
 
 Get service
 
 {% highlight bash %}
+
    python -m unipass --get <arg>
+   
 {% endhighlight %}
 
 Import/export
 
 {% highlight bash %}
+
    python -m unipass --import-data <arg>
-   python -m unipass --export-data <arg>   
+   python -m unipass --export-data <arg>
+   
 {% endhighlight %}
 
 
