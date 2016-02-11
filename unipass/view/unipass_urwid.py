@@ -18,8 +18,8 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
             self.menu(u'UniPass', [
                 self.button('List entries', self.service_list),
                 self.button('Add entry', self.service_add),                
-                self.button('Search entry', None),
-                self.button('Generate password', self.generate_password),
+                #self.button('Search entry', None),
+                #self.button('Generate password', self.generate_password),
                 self.button('Export to file', self.export_to_file),
                 self.button('Import from file', self.import_from_file),
                 urwid.Text('\n'),
@@ -78,18 +78,24 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
 
             def delete_service(btn, uuid):
                 controller.delete_service(uuid)
-                self.back()
-                self.back()
+                self.back(None)
+                self.back(None)
+                self.back(None)
                 
             self.open_box(
-                self.menu(entry.service, [urwid.Text('Are you sure that you wanna delete:', align='center'), urwid.Text(entry.service, align='center')]+[urwid.Text('\n'),self.button('No', self.back), self.button('Yes', delete_service_confirm, entry.uuid)]))
+                self.menu('Delete!', [urwid.Text('Are you sure that you wanna delete:', align='center'), urwid.Text(entry.service, align='center')]+[urwid.Text('\n'),self.button('No', self.back), self.button('Yes', delete_service, entry.uuid)]))
 
         self.open_box(
             self.menu(entry.service,
-                [urwid.Text('Username: '), urwid.Text(entry.name), urwid.Text('\n'),
-                 urwid.Text('Password: '), urwid.Text(entry.password), urwid.Text('\n'),
-                 urwid.Text('Note: '), urwid.Text(entry.note), urwid.Text('\n\n'),
-             ]+[self.button('Copy password', password_to_clipboard), self.button('Edit', self.service_edit, entry), self.button('Back', self.back), self.button('Delete', delete_service_confirm, entry)]
+                [urwid.Text('Username: {}'.format(entry.name)),
+                 urwid.Text('Password: {}'.format(entry.password)),
+                 urwid.Text('Note: {}'.format(entry.note)),
+                 urwid.Text('\n'),
+                 self.button('Copy password', password_to_clipboard),
+                 self.button('Edit', self.service_edit, entry),
+                 self.button('Back', self.back),
+                 urwid.Text('\n'),
+                 self.button('Delete', delete_service_confirm, entry)]
             )
         )
 
