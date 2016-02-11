@@ -4,7 +4,7 @@ import os
 from unipass.controller import controller
 from unipass.model.models import initdb
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class ControllerTest(unittest.TestCase):
@@ -37,10 +37,10 @@ class ControllerTest(unittest.TestCase):
         self.assertTrue(controller.export_data())
 
     def test_importData_False(self):
-        self.assertFalse(controller.import_data(path='broken.json'))
+        self.assertFalse(controller.import_data(path=BASE_DIR+'/broken.json'))
 
     def test_importData_True(self):
-        self.assertTrue(controller.import_data(path='correct.json'))
+        self.assertTrue(controller.import_data(path=BASE_DIR+'/correct.json'))
 
 
 
