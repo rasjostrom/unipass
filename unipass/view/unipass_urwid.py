@@ -16,6 +16,7 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
         self.open_box(
             self.menu(u'UniPass', [
                 self.button('List entries', self.service_list),
+                self.button('Add entry', self.service_add),                
                 self.button('Search entry', None),
                 self.button('Generate password', self.generate_password),
                 self.button('Export to file', self.export_to_file),
@@ -24,6 +25,30 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                 self.button('Quit', self.exit_program),
             ])
         )
+
+    def service_add(self, btn):
+        service = urwid.Edit(caption='Service: ', edit_text="")
+        name = urwid.Edit(caption='Username: ', edit_text="")
+        password = urwid.Edit(caption='Password: ', edit_text="")
+        note = urwid.Edit(caption='Note: ', edit_text="")
+        status = urwid.Text('\n', align='center')
+
+        def save(btn):
+            if controller.add_service(
+                    service.get_edit_text(),
+                    name.get_edit_text(),
+                    password.get_edit_text(),
+                    note.get_edit_text()
+            ):
+                status.set_text('\nCreated success!')
+            else:
+                status.set_text('\nSomethings wrong!')
+        
+        self.open_box(
+            self.menu('Add entry', [status, service, name, password, note]+[urwid.Text('\n'), self.button('Save', save), urwid.Text('\n'), self.button('Back', self.back)])
+        )
+        
+        
 
     def service_list(self, btn):
 
@@ -49,9 +74,11 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
 
             def delete_service(btn, uuid):
                 controller.delete_service(uuid)
+                self.back()
+                self.back()
                 
             self.open_box(
-                self.menu(entry.service, [urwid.Text('Are you sure that you wanna delete:', align='center'), urwid.Text(entry.service, align='center')]+[self.button('No', self.back), self.button('Yes', delete_service_confirm, entry.uuid)]))
+                self.menu(entry.service, [urwid.Text('Are you sure that you wanna delete:', align='center'), urwid.Text(entry.service, align='center')]+[urwid.Text('\n'),self.button('No', self.back), self.button('Yes', delete_service_confirm, entry.uuid)]))
         
         entry = controller.get_service_by_uuid(data)
         self.open_box(
