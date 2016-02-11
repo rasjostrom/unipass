@@ -72,6 +72,12 @@ python -m unipass --import-data <arg>
 python -m unipass --export-data <arg>
 ```
 
+Database located in
+
+```shell
+~/.unipass/sqlite3.db
+```
+
 
 ## Todo
 
