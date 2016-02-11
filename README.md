@@ -15,6 +15,18 @@ AS FOR NOW THIS APPLICATION DOES NOT ENCRYPT STORED PASSWORDS!
 * urwid
 * click
 
+Install pip
+
+```shell
+apt-get install python-pip
+```
+
+Install requirements
+
+```shell
+pip install -r requirements.txt 
+```
+
 ## Usage
 
 Show available commands
