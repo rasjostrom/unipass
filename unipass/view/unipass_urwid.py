@@ -2,6 +2,7 @@
 import urwid
 from unipass.controller import controller
 from unipass.settings import settings
+import pyperclip
 
 
 class UniPassUrwid(urwid.WidgetPlaceholder):
@@ -33,6 +34,9 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
         note = urwid.Edit(caption='Note: ', edit_text="")
         status = urwid.Text('\n', align='center')
 
+        def paste_password(btn):
+            password.set_edit_text(pyperclip.paste())
+
         def save(btn):
             if controller.add_service(
                     service.get_edit_text(),
@@ -45,11 +49,9 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                 status.set_text('\nSomethings wrong!')
         
         self.open_box(
-            self.menu('Add entry', [status, service, name, password, note]+[urwid.Text('\n'), self.button('Save', save), urwid.Text('\n'), self.button('Back', self.back)])
+            self.menu('Add entry', [status, service, name, password, note]+[urwid.Text('\n'), self.button('Paster from clipboard', paste_password), self.button('Save', save), urwid.Text('\n'), self.button('Back', self.back)])
         )
         
-        
-
     def service_list(self, btn):
 
         self.open_box(
@@ -66,9 +68,11 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
         ))
 
     def service_detail(self, btn, data):
-
+        
+        entry = controller.get_service_by_uuid(data)
+        
         def password_to_clipboard(btn):
-            pass
+            pyperclip.copy(entry.password)
 
         def delete_service_confirm(btn, data):
 
@@ -79,14 +83,13 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                 
             self.open_box(
                 self.menu(entry.service, [urwid.Text('Are you sure that you wanna delete:', align='center'), urwid.Text(entry.service, align='center')]+[urwid.Text('\n'),self.button('No', self.back), self.button('Yes', delete_service_confirm, entry.uuid)]))
-        
-        entry = controller.get_service_by_uuid(data)
+
         self.open_box(
             self.menu(entry.service,
                 [urwid.Text('Username: '), urwid.Text(entry.name), urwid.Text('\n'),
                  urwid.Text('Password: '), urwid.Text(entry.password), urwid.Text('\n'),
                  urwid.Text('Note: '), urwid.Text(entry.note), urwid.Text('\n\n'),
-             ]+[self.button('Edit', self.service_edit, entry), self.button('Back', self.back), self.button('Delete', delete_service_confirm, entry)]
+             ]+[self.button('Copy password', password_to_clipboard), self.button('Edit', self.service_edit, entry), self.button('Back', self.back), self.button('Delete', delete_service_confirm, entry)]
             )
         )
 
@@ -97,6 +100,9 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
         password = urwid.Edit(caption='Password: ', edit_text=data.password)
         note = urwid.Edit(caption='Note: ', edit_text=data.note)
         status = urwid.Text('\n', align='center')
+
+        def paste_password(btn):
+            password.set_edit_text(pyperclip.paste())
         
         def save(btn):
             if controller.update_service(
@@ -111,7 +117,7 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                 status.set_text('\Somethings wrong!')
         
         self.open_box(
-            self.menu('Edit: {}'.format(data.service), [status, service, name, password, note]+[urwid.Text('\n'), self.button('Save', save), urwid.Text('\n'), self.button('Back', self.back)])
+            self.menu('Edit: {}'.format(data.service), [status, service, name, password, note]+[urwid.Text('\n'), self.button('Save', save), self.button('Paste password from clipbord', paste_password), urwid.Text('\n'), self.button('Back', self.back)])
         )
 
     def export_to_file(self, btn):
