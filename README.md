@@ -21,6 +21,12 @@ Install pip
 apt-get install python-pip
 ```
 
+Install copy/paste dependency
+
+```shell
+apt-get install xsel
+```
+
 Install requirements
 
 ```shell
@@ -47,7 +53,6 @@ List services
 python -m unipass --list
 ```
 
-
 Add service
 
 ```shell
@@ -69,6 +74,12 @@ python -m unipass --export-data <arg>
 
 
 ## Todo
+
 - [ ] ! Encrypt data stored in db !
+- [ ] Find something generic instead of "xsel" for copy/paste
 - [ ] Get more test coverage
+- [X] Add password entry
+- [X] Edit password entry
+- [X] Delete password entry
+
 
