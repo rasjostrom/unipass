@@ -66,9 +66,12 @@ def start(urwid, add, get, list, export_data, import_data):
             print('Something when wrong, sorry')
 
     if list:
+        print('|'+'-'*55+'|')        
+        print('| {:>25} | {:25} |'.format('Service', 'Username'))
+        print('|'+'-'*55+'|')
         for service in controller.list_all_services():
-            print(service[0]+' | '+service[1])
-
+            print('| {:>25} | {:25} |'.format(service[0], service[1]))
+        print('|'+'-'*55+'|')        
     
 def create_user():
     """
