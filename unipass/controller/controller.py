@@ -61,7 +61,11 @@ def update_service(uuid, service, name, password, note):
     else:
         return False
 
-
+def delete_service(uuid):
+    serv = Service.getbyuuid(uuid)
+    serv.delete()
+    return True
+    
 def get_service_by_uuid(uuid):
     return Service.getbyuuid(uuid)
 

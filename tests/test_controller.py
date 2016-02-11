@@ -29,6 +29,11 @@ class ControllerTest(unittest.TestCase):
         self.assertTrue(controller.create_user('admin', 'password'))
         self.assertTrue(controller.login('admin', 'password'))
 
+    def test_deleteEntry_True(self):
+        self.assertTrue(controller.add_service('facebook', 'jherrin@gmail.com', 'password', 'facebook acc'))
+        serv = controller.find_by_service('facebook')
+        self.assertTrue(controller.delete_service(serv.uuid))
+        
     def test_exportData_True(self):
         self.assertTrue(controller.create_user('john', 'password'))
         self.assertTrue(controller.export_data())

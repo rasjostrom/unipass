@@ -44,6 +44,14 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
 
         def password_to_clipboard(btn):
             pass
+
+        def delete_service_confirm(btn, data):
+
+            def delete_service(btn, uuid):
+                controller.delete_service(uuid)
+                
+            self.open_box(
+                self.menu(entry.service, [urwid.Text('Are you sure that you wanna delete:', align='center'), urwid.Text(entry.service, align='center')]+[self.button('No', self.back), self.button('Yes', delete_service_confirm, entry.uuid)]))
         
         entry = controller.get_service_by_uuid(data)
         self.open_box(
@@ -51,7 +59,7 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                 [urwid.Text('Username: '), urwid.Text(entry.name), urwid.Text('\n'),
                  urwid.Text('Password: '), urwid.Text(entry.password), urwid.Text('\n'),
                  urwid.Text('Note: '), urwid.Text(entry.note), urwid.Text('\n\n'),
-             ]+[self.button('Edit', self.service_edit, entry), urwid.Text('\n'), self.button('Back', self.back)]
+             ]+[self.button('Edit', self.service_edit, entry), self.button('Back', self.back), self.button('Delete', delete_service_confirm, entry)]
             )
         )
 
