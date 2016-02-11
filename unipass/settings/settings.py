@@ -1,6 +1,6 @@
 import os
 
-DEGUB = True
+DEGUB = False
 
 if not DEGUB:
     HOME_DIR = os.path.expanduser('~')

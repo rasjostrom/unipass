@@ -31,13 +31,13 @@ def start(urwid, add, get, list, export_data, import_data):
 
     if initdb() is not True:
         create_user()
+        print('User created!')
 
     if urwid:
-        unipass_urwid.start()        
-        # username = raw_input('User:')
-        # password = getpass('Pass: ')
-        # if controller.login(username, password):
-        #     unipass_urwid.start()
+        username = raw_input('User:')
+        password = getpass('Pass: ')
+        if controller.login(username, password):
+            unipass_urwid.start()
     
 
     if get is not None:
