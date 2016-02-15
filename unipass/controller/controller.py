@@ -26,14 +26,14 @@ def create_user(username, password):
 
 
 def find_by_service(service):
-    for user in Service.getall():
-        if user.service == service:
-            return user
+    for serv in Service.getall():
+        if serv.service == service:
+            return serv
     return None
 
 
 def list_all_services():
-    return [(user.service, user.name, user.uuid) for user in Service.getall()]
+    return [(serv.service, serv.name, serv.uuid) for serv in Service.getall()]
 
 
 def add_service(service, name, password, note):
