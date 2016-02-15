@@ -1,4 +1,6 @@
 
+import string
+import random
 import urwid
 from unipass.controller import controller
 from unipass.settings import settings
@@ -19,13 +21,11 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                 self.button('List entries', self.service_list),
                 self.button('Add entry', self.service_add),                
                 #self.button('Search entry', None),
-                #self.button('Generate password', self.generate_password),
+                self.button('Generate password', self.generate_password),
                 self.button('Export to file', self.export_to_file),
                 self.button('Import from file', self.import_from_file),
                 urwid.Text('\n'),
-                self.button('Quit', self.exit_program),
-            ])
-        )
+                self.button('Quit', self.exit_program) ]))
 
     def service_add(self, btn):
         service = urwid.Edit(caption='Service: ', edit_text="")
@@ -59,8 +59,7 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                 self.button('Paster from clipboard', paste_password),
                 self.button('Save', save),
                 urwid.Text('\n'),
-                self.button('Back', self.back)])
-        )
+                self.button('Back', self.back) ]))
         
     def service_list(self, btn):
 
@@ -95,7 +94,7 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                     urwid.Text(entry.service, align='center'),
                     urwid.Text('\n'),
                     self.button('No', self.back),
-                    self.button('Yes', delete_service, entry.uuid)]))
+                    self.button('Yes', delete_service, entry.uuid) ]))
 
         self.open_box(
             self.menu(entry.service,
@@ -107,9 +106,7 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                  self.button('Edit', self.service_edit, entry),
                  self.button('Back', self.back),
                  urwid.Text('\n'),
-                 self.button('Delete', delete_service_confirm, entry)]
-            )
-        )
+                 self.button('Delete', delete_service_confirm, entry) ]))
 
     def service_edit(self, btn, data):
 
@@ -145,7 +142,7 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                 self.button('Save', save),
                 self.button('Paste password from clipbord', paste_password),
                 urwid.Text('\n'),
-                self.button('Back', self.back)]))
+                self.button('Back', self.back) ]))
 
     def export_to_file(self, btn):
 
@@ -164,7 +161,7 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                 urwid.Text('\n'),
                 self.button('Export', save),
                 urwid.Text('\n'),
-                self.button('Back', self.back)]))
+                self.button('Back', self.back) ]))
 
     def import_from_file(self, btn):
 
@@ -183,13 +180,54 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                 urwid.Text('\n'),
                 self.button('Start import', save),
                 urwid.Text('\n'),
-                self.button('Back', self.back)]))
+                self.button('Back', self.back) ]))
 
     def generate_password(self, btn):
+        
+        def password_to_clipboard(btn):
+            pyperclip.copy(password.get_text()[0])
+
+        def generate(btn):
+            pwd = ''
+            chars = ''
+            special_chars = '%#'
+            if lower_case.get_state:
+                chars += string.ascii_lowercase
+            if upper_case.get_state:
+                chars += string.ascii_uppercase
+            if numbers.get_state:
+                chars += string.digits
+            if special.get_state:
+                chars += special_chars
+
+            pwd_length = int(length.get_edit_text())
+
+            for i in range(pwd_length):
+                pwd += chars[random.randint(0, len(chars)-1)]
+
+            password.set_text(pwd)
+
+        password = urwid.Text("Password: ", align='center')
+        lower_case = urwid.CheckBox(label='Lower case', state=True)
+        upper_case = urwid.CheckBox(label='Upper case', state=True)
+        numbers = urwid.CheckBox(label='Numbers', state=True)
+        special = urwid.CheckBox(label='Special', state=False)
+        length = urwid.Edit('Length:', '16')
+        
         self.open_box(
-            self.menu(
-                'Genereate Password', [
-                    self.button('Back', self.back)]))
+            self.menu('Genereate Password', [
+                password,
+                urwid.Text('\n'),
+                lower_case,
+                upper_case,
+                numbers,
+                special,
+                length,
+                urwid.Text('\n'),
+                self.button('Generate pwd', generate),
+                self.button('Copy', password_to_clipboard),
+                urwid.Text('\n'),
+                self.button('Back', self.back) ]))
 
     def button(self, caption, callback, data=None):
         button = urwid.Button(caption)
