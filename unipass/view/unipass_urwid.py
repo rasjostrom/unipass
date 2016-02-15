@@ -49,22 +49,29 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                 status.set_text('\nSomethings wrong!')
         
         self.open_box(
-            self.menu('Add entry', [status, service, name, password, note]+[urwid.Text('\n'), self.button('Paster from clipboard', paste_password), self.button('Save', save), urwid.Text('\n'), self.button('Back', self.back)])
+            self.menu('Add entry', [
+                status,
+                service,
+                name,
+                password,
+                note,
+                urwid.Text('\n'),
+                self.button('Paster from clipboard', paste_password),
+                self.button('Save', save),
+                urwid.Text('\n'),
+                self.button('Back', self.back)])
         )
         
     def service_list(self, btn):
 
         self.open_box(
-            self.menu('Services',
-                      [
-                          self.button(user[0], self.service_detail, user[2]) for user in controller.list_all_services()
-                      ]+
-                      [
-                          urwid.Text('\n\n')
-                      ]+
-                      [
-                          self.button('Back', self.back)
-                      ]
+            self.menu('Services', [
+                self.button(user[0], self.service_detail, user[2])
+                for user in controller.list_all_services()
+            ]+[
+                urwid.Text('\n\n'),
+                self.button('Back', self.back)
+            ]
         ))
 
     def service_detail(self, btn, data):
@@ -83,7 +90,12 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                 self.back(None)
                 
             self.open_box(
-                self.menu('Delete!', [urwid.Text('Are you sure that you wanna delete:', align='center'), urwid.Text(entry.service, align='center')]+[urwid.Text('\n'),self.button('No', self.back), self.button('Yes', delete_service, entry.uuid)]))
+                self.menu('Delete!', [
+                    urwid.Text('Are you sure that you wanna delete:', align='center'),
+                    urwid.Text(entry.service, align='center'),
+                    urwid.Text('\n'),
+                    self.button('No', self.back),
+                    self.button('Yes', delete_service, entry.uuid)]))
 
         self.open_box(
             self.menu(entry.service,
@@ -123,12 +135,22 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
                 status.set_text('\Somethings wrong!')
         
         self.open_box(
-            self.menu('Edit: {}'.format(data.service), [status, service, name, password, note]+[urwid.Text('\n'), self.button('Save', save), self.button('Paste password from clipbord', paste_password), urwid.Text('\n'), self.button('Back', self.back)])
-        )
+            self.menu('Edit: {}'.format(data.service), [
+                status,
+                service,
+                name,
+                password,
+                note,
+                urwid.Text('\n'),
+                self.button('Save', save),
+                self.button('Paste password from clipbord', paste_password),
+                urwid.Text('\n'),
+                self.button('Back', self.back)]))
 
     def export_to_file(self, btn):
 
-        path = urwid.Edit(caption='Export path: ', edit_text=settings.HOME_DIR+'/unipass_export.json')
+        path = urwid.Edit(caption='Export path: ',
+                          edit_text=settings.HOME_DIR+'/unipass_export.json')
         status = urwid.Text('\n', align='center')
 
         def save(btn):
@@ -136,12 +158,18 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
             status.set_text('\nUpdated success!')
 
         self.open_box(
-            self.menu('Export UniPass database', [status, path]+[urwid.Text('\n'), self.button('Export', save), urwid.Text('\n'), self.button('Back', self.back)])
-        )
+            self.menu('Export UniPass database', [
+                status,
+                path,
+                urwid.Text('\n'),
+                self.button('Export', save),
+                urwid.Text('\n'),
+                self.button('Back', self.back)]))
 
     def import_from_file(self, btn):
 
-        path = urwid.Edit(caption='File location: ', edit_text=settings.HOME_DIR+'/unipass_export.json')
+        path = urwid.Edit(caption='File location: ',
+                          edit_text=settings.HOME_DIR+'/unipass_export.json')
         status = urwid.Text('\n', align='center')
 
         def save(btn):
@@ -149,16 +177,19 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
             status.set_text('\nImport success!')
 
         self.open_box(
-            self.menu('Import from file', [status, path]+[urwid.Text('\n'), self.button('Start import', save), urwid.Text('\n'), self.button('Back', self.back)])
-        )
+            self.menu('Import from file', [
+                status,
+                path,
+                urwid.Text('\n'),
+                self.button('Start import', save),
+                urwid.Text('\n'),
+                self.button('Back', self.back)]))
 
     def generate_password(self, btn):
         self.open_box(
             self.menu(
-                'Genereate Password',
-                [self.button('Back', self.back)]
-            )
-        )
+                'Genereate Password', [
+                    self.button('Back', self.back)]))
 
     def button(self, caption, callback, data=None):
         button = urwid.Button(caption)
