@@ -188,22 +188,12 @@ class UniPassUrwid(urwid.WidgetPlaceholder):
             pyperclip.copy(password.get_text()[0])
 
         def generate(btn):
-            pwd = ''
-            chars = ''
-            special_chars = '%#'
-            if lower_case.get_state:
-                chars += string.ascii_lowercase
-            if upper_case.get_state:
-                chars += string.ascii_uppercase
-            if numbers.get_state:
-                chars += string.digits
-            if special.get_state:
-                chars += special_chars
-
-            pwd_length = int(length.get_edit_text())
-
-            for i in range(pwd_length):
-                pwd += chars[random.randint(0, len(chars)-1)]
+            pwd = controller.generate_password(
+                lower_case.get_state(),
+                upper_case.get_state(),
+                numbers.get_state(),
+                special.get_state(),
+                int(length.get_edit_text()))
 
             password.set_text(pwd)
 
