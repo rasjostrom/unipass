@@ -1,5 +1,7 @@
 
+import random
 import json
+import string
 
 from unipass.model.models import Service, initdb
 
@@ -92,5 +94,21 @@ def import_data(path='unipass_export.json'):
             return False
 
 
+def generate_password(lowercase, uppercase, numbers, special, length):
+    pwd = ''
+    chars = ''
+    special_chars = '%#'
+    if lowercase:
+        chars += string.ascii_lowercase
+    if uppercase:
+        chars += string.ascii_uppercase
+    if numbers:
+        chars += string.digits
+    if special:
+        chars += special_chars
 
+    for i in range(length):
+        pwd += chars[random.randint(0, len(chars)-1)]
+
+    return pwd
 

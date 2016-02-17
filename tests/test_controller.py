@@ -47,6 +47,9 @@ class ControllerTest(unittest.TestCase):
     def test_importData_True(self):
         self.assertTrue(controller.import_data(path=BASE_DIR+'/correct.json'))
 
+    def test_generatePassword_True(self):
+        self.assertTrue(len(controller.generate_password(
+            True, True, True, True, 10)) == 10)
 
 
 
