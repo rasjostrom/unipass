@@ -1,4 +1,10 @@
 
+try:
+    input = raw_input
+except NameError:
+    pass
+
+
 import click
 import pyperclip
 from getpass import getpass
@@ -34,14 +40,14 @@ def start(urwid, add, get, list, export_data, import_data):
         print('User created!')
 
     if urwid:
-        username = raw_input('User:')
+        print('Login!')
+        username = str(input('User: '))
         password = getpass('Pass: ')
         if controller.login(username, password):
             unipass_urwid.start()
-    
 
     if get is not None:
-        username = raw_input('User:')
+        username = str(input('User:'))
         password = getpass('Pass: ')
         if controller.login(username, password):
             result = controller.find_by_service(get)
@@ -56,10 +62,10 @@ def start(urwid, add, get, list, export_data, import_data):
             print('wrong cridentials')
 
     if add:
-        service = raw_input('Service: ')
-        username = raw_input('Username: ')
-        password = raw_input('Password: ')
-        note = raw_input('Note: ')
+        service = str(input('Service: '))
+        username = str(input('Username: '))
+        password = str(input('Password: '))
+        note = str(input('Note: '))
         if controller.add_service(service, username, password, note):
             print('{} saved.'.format(service))
         else:
@@ -78,7 +84,7 @@ def create_user():
     Create a user
     """
     print('No database found!\nCreate a user!')
-    user = raw_input('Username: ')
+    user = str(input('Username: '))
     password1 = getpass('Password: ')
     password2 = getpass('Password again: ')
     while password1 != password2:
