@@ -1,4 +1,4 @@
 urwid
-simple-crypt
+pycrypto
 click
 pyperclip
