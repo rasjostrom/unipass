@@ -17,3 +17,4 @@ script: nosetests
 branches:
   only:
     - master
+    - develop
