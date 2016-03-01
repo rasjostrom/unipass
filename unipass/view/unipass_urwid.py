@@ -1,6 +1,4 @@
 
-import string
-import random
 import urwid
 from unipass.controller import controller
 from unipass.settings import settings

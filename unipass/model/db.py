@@ -1,6 +1,8 @@
+
 import sqlite3 as lite
+import pickle
+
 from unipass.settings import settings
-import pickle 
 
 
 DB = settings.DB
